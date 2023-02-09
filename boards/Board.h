@@ -7,7 +7,6 @@
 #include "hal/HAL.h"
 #include "tmc/VitalSignsMonitor.h"
 
-#include "tmc/ic/TMC2041/TMC2041.h"
 #include "tmc/ic/TMC2130/TMC2130.h"
 #include "tmc/ic/TMC2160/TMC2160.h"
 #include "tmc/ic/TMC2208/TMC2208.h"
@@ -29,7 +28,6 @@
 
 #include "tmc/ic/TMC4330/TMC4330.h"
 #include "tmc/ic/TMC4331/TMC4331.h"
-#include "tmc/ic/TMC4361/TMC4361.h"
 #include "tmc/ic/TMC4361A/TMC4361A.h"
 #include "tmc/ic/TMC5031/TMC5031.h"
 #include "tmc/ic/TMC5041/TMC5041.h"
@@ -157,7 +155,6 @@ typedef enum {
 typedef union {
     TMC4330TypeDef tmc4330;
     TMC4331TypeDef tmc4331;
-    TMC4361TypeDef tmc4361;
     TMC4361ATypeDef tmc4361A;
     TMC5031TypeDef tmc5031;
     TMC5041TypeDef tmc5041;
@@ -173,7 +170,6 @@ extern MotionControllerBoards motionControllerBoards;
 // Group all the driver chip objects into a single union to save memory,
 // since we will only ever use one motion controller at a time
 typedef union {
-    TMC2041TypeDef tmc2041;
     TMC2130TypeDef tmc2130;
     TMC2160TypeDef tmc2160;
     TMC2208TypeDef tmc2208;

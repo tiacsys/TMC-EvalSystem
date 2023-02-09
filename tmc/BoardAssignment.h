@@ -84,7 +84,6 @@ int32_t Board_supported(IdAssignmentTypeDef *ids);  // ids and states of support
 
 // init() functions for all boards - function definitions are in the respective _eval file of a chip
 extern void MAX22216_init();
-extern void TMC2041_init();
 extern void TMC2100_init();
 extern void TMC2130_init();
 extern void TMC2160_init();
@@ -100,9 +99,7 @@ extern void TMC2590_init();
 extern void TMC2660_init();
 extern void TMC4330_init();
 extern void TMC4331_init();
-extern void TMC4361_init();
 extern void TMC4361A_init();
-extern void TMC4670_init();
 extern void TMC4671_init();
 extern void TMC5031_init();
 extern void TMC5041_init();
@@ -133,11 +130,9 @@ typedef struct {
 static const init_assignment init_ch1[] =
 {
 	{ .id = ID_TMC5031,     .init = TMC5031_init     },
-	{ .id = ID_TMC4361,     .init = TMC4361_init     },
 	{ .id = ID_TMC5130,     .init = TMC5130_init     },
 	{ .id = ID_TMC5041,     .init = TMC5041_init     },
 	{ .id = ID_TMC5072,     .init = TMC5072_init     },
-	{ .id = ID_TMC4670,     .init = TMC4670_init     },
 	{ .id = ID_TMC4331,     .init = TMC4331_init     },
 	{ .id = ID_TMC4361A,    .init = TMC4361A_init    },
 	{ .id = ID_TMC4671,     .init = TMC4671_init     },
@@ -157,7 +152,6 @@ static const init_assignment init_ch2[] =
 	{ .id = ID_TMC2660,       .init = TMC2660_init     },
 	{ .id = ID_TMC2130,       .init = TMC2130_init     },
 	{ .id = ID_TMC2100,       .init = TMC2100_init     },
-	{ .id = ID_TMC2041,       .init = TMC2041_init     },
 	{ .id = ID_TMC2208,       .init = TMC2208_init     },
 	{ .id = ID_TMC2224,       .init = TMC2224_init     },
 	{ .id = ID_TMC2240,       .init = TMC2240_init     },
