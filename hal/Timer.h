@@ -5,8 +5,6 @@
 
 #if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
 #define TIMER_MAX 8000
-#elif defined(Startrampe)
-#define TIMER_MAX 10000 // Frequenz von 6kHz => 166,66us pro Periode => 8000 Schritte bei 48Mhz
 #endif
 
 typedef enum {

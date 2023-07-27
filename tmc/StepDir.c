@@ -118,9 +118,8 @@
 #include "StepDir.h"
 #include "hal/derivative.h"
 
-#if defined(Startrampe)
-	#define TIMER_INTERRUPT TIM2_IRQHandler
-#elif defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
+
+#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
 	#define TIMER_INTERRUPT FTM1_IRQHandler
 #endif
 
@@ -146,13 +145,9 @@ static inline void stop(StepDirectionTypedef *channel, StepDirStop stopType);
 
 void TIMER_INTERRUPT()
 {
-#ifdef Startrampe
-	if (TIM_GetITStatus(TIM2, TIM_IT_Update) == RESET)
-		return;
-	TIM_ClearITPendingBit(TIM2, TIM_IT_Update); // clear pending flag
-#else
+
 	FTM1_SC &= ~FTM_SC_TOF_MASK; // clear timer overflow flag
-#endif
+
 
 	for (uint8_t ch = 0; ch < STEP_DIR_CHANNELS; ch++)
 	{
@@ -169,11 +164,9 @@ void TIMER_INTERRUPT()
 		// Check if StallGuard pin is high
 		// Note: If no stall pin is registered, isStallSignalHigh becomes FALSE
 		//       and checkStallguard won't do anything.
-#ifdef Startrampe
-		bool isStallSignalHigh = (currCh->stallGuardPin->port->IDR & currCh->stallGuardPin->bitWeight) != 0;
-#else
+
 		bool isStallSignalHigh = (GPIO_PDIR_REG(currCh->stallGuardPin->GPIOBase) & currCh->stallGuardPin->bitWeight) != 0;
-#endif
+
 		checkStallguard(currCh, isStallSignalHigh);
 
 		// Compute ramp
@@ -593,28 +586,8 @@ void StepDir_init(uint32_t precision)
 	}
 
 	// Chip-specific hardware peripheral initialisation
-	#if defined(Startrampe)
-		TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-		NVIC_InitTypeDef NVIC_InitStructure;
 
-		// Timer 2 konfigurieren (zum Erzeugen von Geschwindigkeiten)
-		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-		TIM_DeInit(TIM2);
-		TIM_TimeBaseStructure.TIM_Period         = 457; // for 120MHz clock -> 60MHz
-		TIM_TimeBaseStructure.TIM_Prescaler      = 0;
-		TIM_TimeBaseStructure.TIM_ClockDivision  = 0;
-		TIM_TimeBaseStructure.TIM_CounterMode    = TIM_CounterMode_Up;
-		TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-		TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-		TIM_Cmd(TIM2, ENABLE);
-
-		// Timer-Interrupt im NVIC freischalten
-		NVIC_InitStructure.NVIC_IRQChannel                    = TIM2_IRQn;
-		NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority  = 1;
-		NVIC_InitStructure.NVIC_IRQChannelSubPriority         = 1;
-		NVIC_InitStructure.NVIC_IRQChannelCmd                 = ENABLE;
-		NVIC_Init(&NVIC_InitStructure);
-	#elif defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
+	#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
 		// enable clock for FTM1
 		SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;
 
@@ -640,9 +613,8 @@ void StepDir_init(uint32_t precision)
 
 void StepDir_deInit()
 {
-	#if defined(Startrampe)
-		TIM_DeInit(TIM2);
-	#elif defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
+
+	#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
 		// Only disable the module if it has been enabled before
 		if (SIM_SCGC6 & SIM_SCGC6_FTM1_MASK)
 		{

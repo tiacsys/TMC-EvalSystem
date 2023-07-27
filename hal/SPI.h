@@ -6,11 +6,9 @@
 
 	typedef struct
 	{
-		#ifdef Startrampe
-			SPI_TypeDef *periphery; // pointer to ST SPI configuration structure
-		#else
+
 			SPI_MemMapPtr periphery; // pointer to freescale SPI memory base pointer
-		#endif
+
 
 		IOPinTypeDef *CSN;
 		unsigned char (*readWrite) (unsigned char data, unsigned char lastTransfer);

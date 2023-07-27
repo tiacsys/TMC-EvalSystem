@@ -9,12 +9,6 @@ typedef struct
 
 	IOPinTypeDef **pins; // Map Pin ID <=> Pin
 
-#if defined(Startrampe)
-	IOPinTypeDef VM_MEAS;
-	IOPinTypeDef AIN0;
-	IOPinTypeDef AIN1;
-	IOPinTypeDef AIN2;
-#endif
 
 	IOPinTypeDef ID_CLK;
 	IOPinTypeDef ID_CH0;

@@ -75,11 +75,8 @@ typedef struct
 
 typedef struct
 {
-	#if defined(Startrampe)
-		GPIO_TypeDef            *port;
-		__IO uint16_t             *setBitRegister;
-		__IO uint16_t             *resetBitRegister;
-	#elif defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
+
+	#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
 		PORT_MemMapPtr          portBase;
 		GPIO_MemMapPtr          GPIOBase;
 		volatile uint32_t         *setBitRegister;
