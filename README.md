@@ -2,25 +2,25 @@
 
 Trinamic Evaluation System ([home page](https://www.trinamic.com/support/eval-kits/))
 
-[AN038: Using TRINAMIC’s IC Software API and Examples](https://www.trinamic.com/fileadmin/assets/Support/AppNotes/AN038_Using_TRINAMICs_IC_Software_API_and_Examples.pdf)
-
 ## Setup
 
 To work on this repository use the following command in order to clone submodules recursively:
 `git clone --recurse-submodules git@github.com:trinamic/TMC-EvalSystem.git`
 
-## Cross Compile on Windows
+## Cross Compile
 
 ### Requirements
 
-* Make (There are a lot of ways to install Make on Windows, check out this blog post to see a few options you have: [https://www.technewstoday.com/install-and-use-make-in-windows/](https://www.technewstoday.com/install-and-use-make-in-windows/). Note that we are not responsible for the content on this website!)
+* Make[^1]
 * GNU Arm Embedded Toolchain: [https://developer.arm.com/downloads/-/gnu-rm](https://developer.arm.com/downloads/-/gnu-rm).
 
-Make also sure the path to make and the toolchain's bin directory is also listed in your PATH environment variable.
+Make also sure that the path to make and the toolchain is listed in your PATH environment variable.
+
+[^1]: Under Microsoft Windows there are a lot of ways to install Make, check out this blog post to see a few options you have: [https://www.technewstoday.com/install-and-use-make-in-windows/](https://www.technewstoday.com/install-and-use-make-in-windows/). Note that we are not responsible for the content on this website!
 
 ### Build
 
-Open the a Command Prompt, change the directory to the TMC-EvalSystem project and execute one of commands below.
+Open a terminal, change the directory to the TMC-EvalSystem project and execute one of commands below.
 
 If you want to use the pre-flashed bootloader on the Landungsbruecke and the TMCL-IDE to upload a new firmware (recommended) use:
 
@@ -33,8 +33,6 @@ If you prefer to erase the pre-flashed bootloader and upload the firmware with a
 
 * For the regular Landgsbruecke: `make all DEVICE=Landungsbruecke LINK=NOBL`
 * For the LandgsbrueckeSmall: `make all DEVICE=LandungsbrueckeSmall LINK=NOBL`
-
-
 
 ## Changelog
 
